@@ -1,0 +1,36 @@
+{
+    
+    videos.map((item, idx) => <Box key={idx}>
+                {item.id.videoId && <VideoCard video={item} />}
+                {item.id.channelId && <ChannelCard ChannelDetail={item} />}
+            </Box>)
+            
+            }
+            
+
+            //ChannelDetail 
+        fetchFromAPI(`search?channelId=${id}&part=snippet&order=date`).then((data) => setVideos(data?.items)
+
+
+    useEffect(() => {
+
+        //get a list of channels and select first channel the matches the id me
+        /* Fetching the channel details from the API and setting the channel details to the state. mintlify */
+        fetchFromAPI(`/channels?part=snippet&id=${id}`).then((data) => setChannelDetail(data?.items[0]))
+
+        //Get all the videos in the channel - me
+        /* Fetching the videos from the API and setting the videos to the state. - mintlify */
+        fetchFromAPI(`search?channelId=${id}&part=snippet%2Cid&order=date`).then((data) => setVideos(data?.items))
+
+    }, [id]  /* Dependency object*/)
+
+
+
+
+     <Box p={2} minHeight='95vh'>
+            <Typography variant='h4' mb={3} sx={{ ml: { sm: '100px', } }} color='#fff' fontWeight={900} >
+                Search for results: <span style={{ color: "#FC1503" }}>{searchTerm}</span> videos
+            </Typography>
+
+            <Videos videos={videos} />
+        </Box>
